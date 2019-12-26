@@ -240,9 +240,9 @@ int main()
 		//定义存储路径
 		string savepath = "D:\\kinect\\data\\";
 		//存储3种图片
-		cv::imwrite(savepath + "depth_show\\"+ currtime+"-"+ to_string(imageIndex)+ ".png", depthImg_show);
-		cv::imwrite(savepath + "depth\\"+currtime + "-" + to_string(imageIndex) + ".png", depthImg);
-		cv::imwrite(savepath + "color\\"+currtime + "-" + to_string(imageIndex) + ".png", colorImg);
+		cv::imwrite(savepath + currtime+"-"+ to_string(imageIndex)+ "-gray.png", depthImg_show);
+		cv::imwrite(savepath +currtime + "-" + to_string(imageIndex) + "-depth.png", depthImg);
+		cv::imwrite(savepath +currtime + "-" + to_string(imageIndex) + "-color.png", colorImg);
 		//存储映射关系	
 		char* b_temp = g_buffer;
 		
@@ -271,7 +271,7 @@ int main()
 		//out << g_buffer << endl;
 		//out.close();
 		FILE * stream;
-		stream = fopen((savepath + "text\\" + currtime + "-" + to_string(imageIndex) + ".txt").c_str(), "w");
+		stream = fopen((savepath  + currtime + "-" + to_string(imageIndex) + "-align.txt").c_str(), "w");
 		fwrite(g_buffer, 20*512*424, 1, stream);
 		imageIndex++;
 		fclose(stream);
@@ -290,7 +290,10 @@ int main()
 		}
 
 		printf("已采集 %d 图片\n",imageIndex);
-		Sleep(1500);
+		if (imageIndex >= 41) {
+			break;
+		}
+		Sleep(1300);
 	}
 	delete g_buffer;
 	
