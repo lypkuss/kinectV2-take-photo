@@ -43,6 +43,14 @@ int main()
 	// Color reader  
 	IColorFrameReader*  m_pColorFrameReader = NULL;
 
+	//基础存储路径
+	string basepath = "D:\\kinect-data\\";
+	//初始时间
+	string begintime = getTime();
+	string command;
+	command = "mkdir -p " + basepath + begintime;
+	system(command.c_str());
+
 	hr = GetDefaultKinectSensor(&m_pKinectSensor);
 	if (FAILED(hr))
 	{
@@ -238,11 +246,12 @@ int main()
 		//获取时间戳
 		string currtime =getTime();
 		//定义存储路径
-		string savepath = "D:\\kinect\\data\\";
+		string savepath = basepath + begintime + "\\";
+		
 		//存储3种图片
-		cv::imwrite(savepath + currtime+"-"+ to_string(imageIndex)+ "-gray.png", depthImg_show);
-		cv::imwrite(savepath +currtime + "-" + to_string(imageIndex) + "-depth.png", depthImg);
-		cv::imwrite(savepath +currtime + "-" + to_string(imageIndex) + "-color.png", colorImg);
+		cv::imwrite(savepath  +currtime+"-"+ to_string(imageIndex)+ "_gray.png", depthImg_show);
+		cv::imwrite(savepath  +currtime + "-" + to_string(imageIndex) + "_gt.png", depthImg);
+		cv::imwrite(savepath  +currtime + "-" + to_string(imageIndex) + "_rgb.jpg", colorImg);
 		//存储映射关系	
 		char* b_temp = g_buffer;
 		
